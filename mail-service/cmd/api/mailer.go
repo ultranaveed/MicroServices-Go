@@ -22,5 +22,7 @@ type Message struct {
 }
 
 func (m *Mail) SendSMTPMessage(msg Message) error {
-
+	if msg.From == "" {
+		msg.From = m.FromAddress
+	}
 }
