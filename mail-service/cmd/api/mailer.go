@@ -2,7 +2,9 @@ package main
 
 import (
 	"bytes"
+	"errors"
 	"html/template"
+	"log"
 	"time"
 
 	"github.com/vanng822/go-premailer/premailer"
@@ -31,6 +33,10 @@ type Message struct {
 }
 
 func (m *Mail) SendSMTPMessage(msg Message) error {
+	if msg.To == "" {
+		return errors.New("no recipient specified... sad")
+	}
+
 	if msg.From == "" {
 		msg.From = m.FromAddress
 	}
@@ -67,6 +73,7 @@ func (m *Mail) SendSMTPMessage(msg Message) error {
 
 	smtpClient, err := server.Connect()
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 
@@ -86,6 +93,7 @@ func (m *Mail) SendSMTPMessage(msg Message) error {
 
 	err = email.Send(smtpClient)
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 
