@@ -49,6 +49,11 @@ func (consumer *Consumer) Listen(topics []string) error {
 	}
 	defer ch.Close()
 
+	err = declareExchange(ch)
+	if err != nil {
+		return err
+	}
+
 	q, err := declareRandomQueue(ch)
 	if err != nil {
 		return nil
@@ -58,7 +63,7 @@ func (consumer *Consumer) Listen(topics []string) error {
 		ch.QueueBind(
 			q.Name,
 			s,
-			"logs_topics",
+			"logs_topic",
 			false,
 			nil,
 		)

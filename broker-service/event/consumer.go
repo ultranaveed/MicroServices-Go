@@ -58,7 +58,7 @@ func (consumer *Consumer) Listen(topics []string) error {
 		ch.QueueBind(
 			q.Name,
 			s,
-			"logs_topics",
+			"logs_topic",
 			false,
 			nil,
 		)
