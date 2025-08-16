@@ -277,7 +277,7 @@ func (app *Config) LogViaGRPC(w http.ResponseWriter, r *http.Request) {
 		app.errorJSON(w, err)
 		return
 	}
-
+	//
 	defer conn.Close()
 
 	c := logs.NewLogServiceClient(conn)
